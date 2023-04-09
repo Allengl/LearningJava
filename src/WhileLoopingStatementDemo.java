@@ -1,4 +1,4 @@
-public class LoopingStatementDemo {
+public class WhileLoopingStatementDemo {
     public static void main(String[] args) {
         // while
         int a = 0;
@@ -16,10 +16,13 @@ public class LoopingStatementDemo {
         for (int c = 0; c < 10; c++) {
             System.out.println("c = " + c);
         }
-        // for-each
-        int[] arr = {1, 2, 3, 4, 5};
-        for (int d : arr) {
+        // for
+        for (int d = 0; d < 10; d++) {
+            if (d == 5) {
+                break;
+            }
             System.out.println("d = " + d);
         }
+
     }
 }
