@@ -2,7 +2,7 @@ package com.gl.java.arraylist;
 
 
 /**
- * The array list for int type.
+ * The array list for in type.
  */
 
 public class MyArrayList {
