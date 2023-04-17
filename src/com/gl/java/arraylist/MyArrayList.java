@@ -1,17 +1,20 @@
 package com.gl.java.arraylist;
 
 
+import java.util.AbstractList;
+import java.util.List;
+
 /**
- * The array list for in type.
+ * The generic ArrayList class.
  */
 
-public class MyArrayList {
+public class MyArrayList<E> {
     private static final int DEFAULT_CAPACITY = 10;
     // field 属性
     /**
      * The data storage of array list.
      */
-    private int[] elementData;
+    private E[] elementData;
 
     /**
      * The size of the ArrayList (the number of elements it contains).
@@ -25,7 +28,7 @@ public class MyArrayList {
 
     // constructor 构造方法
     public MyArrayList() {
-        this.elementData = new int[DEFAULT_CAPACITY];
+        this.elementData = (E[]) new Object[DEFAULT_CAPACITY];
         this.capacity = DEFAULT_CAPACITY;
         this.size = 0;
     }
@@ -34,11 +37,11 @@ public class MyArrayList {
         if (capacity < 0) {
             throw new IllegalArgumentException("Illegal Capacity: " + capacity);
         } else if (capacity < DEFAULT_CAPACITY) {
-            this.elementData = new int[DEFAULT_CAPACITY];
+            this.elementData = (E[]) new Object[DEFAULT_CAPACITY];
             this.capacity = DEFAULT_CAPACITY;
             this.size = 0;
         } else {
-            this.elementData = new int[capacity];
+            this.elementData = (E[]) new Object[capacity];
             this.capacity = capacity;
             this.size = 0;
         }
@@ -70,7 +73,7 @@ public class MyArrayList {
      * @param element the element to be checked.
      * @return true if this list contains the specified element.
      */
-    public boolean contains(int element) {
+    public boolean contains(E element) {
         return indexOf(element) >= 0;
     }
 
@@ -80,9 +83,9 @@ public class MyArrayList {
      * @param element the element to be checked.
      * @return the index of the first occurrence of the specified element in this list, or -1 if this list does not contain the element.
      */
-    public int indexOf(int element) {
+    public int indexOf(E element) {
         for (int i = 0; i < size; i++) {
-            if (elementData[i] == element) {
+            if (elementData[i].equals(element)) {
                 return i;
             }
         }
@@ -94,7 +97,7 @@ public class MyArrayList {
      *
      * @param element the element to be added.
      */
-    public void add(int element) {
+    public void add(E element) {
         // 如果数组已满，扩容
         resize(size == capacity ? capacity * 2 : capacity);
         elementData[size++] = element;
@@ -106,7 +109,7 @@ public class MyArrayList {
      * @param index   the index of the element to be added.
      * @param element the element to be added.
      */
-    public void add(int index, int element) {
+    public void add(int index, E element) {
         System.out.println("index" + index);
         rangeCheck(index, index > size);
         // 如果数组已满，扩容
@@ -128,7 +131,7 @@ public class MyArrayList {
      */
     private void resize(int newCapacity) {
         // 1. Create new array
-        int[] newArray = new int[newCapacity];
+        E[] newArray = (E[]) new Object[newCapacity];
 
         // 2. Copy old array to new array
         // System.arraycopy(elementData, 0, newArray, 0, size);
@@ -149,10 +152,10 @@ public class MyArrayList {
      * @param index the index of the element to be removed.
      * @return the element to be removed.
      */
-    public int remove(int index) {
+    public E remove(int index) {
         rangeCheck(index, index >= size);
         // 1. Get value of index
-        int oldVal = elementData[index];
+        E oldVal = elementData[index];
 
         // 2. copy and shift
         int numMoved = size - index - 1;
@@ -160,7 +163,7 @@ public class MyArrayList {
             System.arraycopy(elementData, index + 1, elementData, index, numMoved);
         };
         // 3. update size
-        elementData[--size] = 0;
+        elementData[--size].equals(0);
         return oldVal;
     }
 
@@ -170,10 +173,10 @@ public class MyArrayList {
      * @param element the element to be removed.
      * @return the element to be removed.
      */
-    public boolean removeByElement(int element) {
+    public boolean removeByElement(E element) {
         // 遍历数组，找到第一个等于element的元素，删除
         for (int i = 0; i < size; i++) {
-            if (elementData[i] == element) {
+            if (elementData[i].equals(element)) {
                 remove(i);
                 return true;
             }
@@ -187,11 +190,11 @@ public class MyArrayList {
      * @param index the index of the element of get.
      * @return the element of get.
      */
-    public int get(int index) {
+    public E get(int index) {
         // 0: check index
         rangeCheck(index, index >= size);
         // 1: get value
-        return elementData[index];
+        return (E) elementData[index];
     }
 
     private void rangeCheck(int index, boolean b) {
@@ -208,15 +211,15 @@ public class MyArrayList {
      * @param element the element to be set.
      * @return the old element to be set.
      */
-    public int set(int index, int element) {
-        int oldVal = elementData[index];
+    public E set(int index, E element) {
+        E oldVal = elementData[index];
         elementData[index] = element;
-        return oldVal;
+        return (E) oldVal;
     }
 
 
     public static void main(String[] args) {
-        MyArrayList list = new MyArrayList();
+        MyArrayList<Integer> list = new MyArrayList<>();
         System.out.println(list.size());
         System.out.println(list.isEmpty());
         System.out.println(list.contains(1));
@@ -227,20 +230,18 @@ public class MyArrayList {
             System.out.println("The size of list2 is " + list2.size());
         }
         list2.add(1, 100);
+    // contains 100
+        System.out.println("list2 contains 100 " + list2.contains(100));
+
+        System.out.println("list is empty" + list2.isEmpty());
         // display the list2
-        for (int number : list2.elementData) {
-            System.out.print(number + " ");
-        }
+
+        System.out.println("The size of list2 is " + list2.size());
 
         System.out.println("Element at index 5 is " + list2.get(5));
-        int oldVal = list2.set(5, 100); // Expect 4
-        System.out.println("The old value is " + oldVal);
-        System.out.println("Element at index 5 is " + list2.get(5));
-
         list2.remove(1);
-
-        System.out.println("The size of list2 is " + list2.get(50)); // Runtime Exception
-
+        list2.add(1, 100);
+        System.out.println("Element at index 5 is " + list2);
 
     }
 }
