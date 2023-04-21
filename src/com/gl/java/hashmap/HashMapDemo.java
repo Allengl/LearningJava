@@ -1,8 +1,10 @@
 package com.gl.java.hashmap;
 
 import java.sql.SQLOutput;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 public class HashMapDemo {
 
@@ -74,6 +76,55 @@ public class HashMapDemo {
         System.out.println("value3 of 张三 " + value3); // 88.8
         Double value4 = map.getOrDefault("钱八", 99.9);
         System.out.println("value4 of 钱八 " + value4); // 99.9
+
+        // containsKey/containsValue
+        map.containsKey("张三"); // true
+        map.containsValue(88.8); // true
+        map.containsKey("钱八"); // false
+        System.out.println("map.containsKey(\"钱八\") = " + map.containsKey("钱八")); // false
+        System.out.println("map.containsValue(99.9) = " + map.containsValue(99.9)); // false
+        System.out.println("map.containsValue(88.8) = " + map.containsValue(88.8)); // true
+
+        // remove
+        Double  valueToRemove =  map.remove("张三"); // 88.8
+        System.out.println("valueToRemove = " + valueToRemove);
+        System.out.println("map.get(\"张三\") = " + map.get("张三")); // null
+
+        valueToRemove = map.remove("钱八"); // null
+        System.out.println("valueToRemove = " + valueToRemove);
+        System.out.println("size = " + map.size()); // 6
+        boolean isSucceed = map.remove("孙七", 77.7); // true
+        System.out.println("isSucceed = " + isSucceed);
+        System.out.println("size = " + map.size()); // 5
+
+
+        // replace -> 代替 put 做更新操作 只用于更新，如果 key 不存在，返回 null
+        Double oldValue2 = map.replace("李四", 111.1); // 88.8 -> update
+        System.out.println("oldValue2 = " + oldValue2);
+        System.out.println("map.get(\"李四\") = " + map.get("李四")); // 111.1
+
+        //keySet()/values()/entrySet()
+        Set<String> keySet = map.keySet();
+
+        // 遍历所有的key
+        for (String key : keySet) {
+            System.out.println("key = " + key);
+        }
+
+        Collection<Double> values = map.values();
+
+        // 遍历所有的value
+        for (Double value1 : values) {
+            System.out.println("value = " + value1);
+        }
+
+        // 遍历所有的键值对
+        Set<Map.Entry<String, Double>> entries = map.entrySet();
+
+        for (Map.Entry<String, Double> entry : entries) {
+            System.out.println("key = " + entry.getKey() + ", value = " + entry.getValue());
+        }
+
     }
 
 }
