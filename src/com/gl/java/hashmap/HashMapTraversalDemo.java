@@ -41,8 +41,6 @@ public class HashMapTraversalDemo {
 
         // 4. lambda 表达式遍历
         map.forEach((key, value) -> System.out.println("lambda key = " + key + ", value = " + value));
-
-
         map.entrySet().forEach(entry -> System.out.println("lambda entry key = " + entry.getKey() + ", value = " + entry.getValue()));
 
     }
