@@ -1,10 +1,9 @@
-package com.gl.java.annotation;
 
-@Animals(name = "cat")
-@Animals(name = "dog")
+package com.gl.java.relection;
+
 public class Animal {
 
-    String type;
+    public String type;
 
     public Animal() {}
 
@@ -15,4 +14,9 @@ public class Animal {
     public void eat() {
         System.out.println("Animal eat");
     }
+
+    public void doSomething() {
+        System.out.println("Animal doSomething");
+    }
+
 }
