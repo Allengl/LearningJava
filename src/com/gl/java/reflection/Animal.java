@@ -1,5 +1,5 @@
 
-package com.gl.java.relection;
+package com.gl.java.reflection;
 
 public class Animal {
 

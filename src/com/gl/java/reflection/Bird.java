@@ -1,4 +1,4 @@
-package com.gl.java.relection;
+package com.gl.java.reflection;
 
 import java.io.IOException;
 

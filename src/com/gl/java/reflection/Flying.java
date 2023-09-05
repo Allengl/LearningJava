@@ -1,4 +1,4 @@
-package com.gl.java.relection;
+package com.gl.java.reflection;
 
 public interface Flying {
     void fly();

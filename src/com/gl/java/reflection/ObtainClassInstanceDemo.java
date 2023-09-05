@@ -1,4 +1,4 @@
-package com.gl.java.relection;
+package com.gl.java.reflection;
 
 import com.gl.java.annotation.Cat;
 
@@ -15,7 +15,7 @@ public class ObtainClassInstanceDemo {
 
         // 3.通过Class.forName("全类名")
         try {
-            Class<?> aClass1 = Class.forName("com.gl.java.relection.Cat");
+            Class<?> aClass1 = Class.forName("com.gl.java.reflection.Cat");
             System.out.println(aClass1);
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
