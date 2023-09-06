@@ -3,6 +3,7 @@ package com.gl.java.servlet;
 import com.sun.xml.internal.ws.org.objectweb.asm.ClassAdapter;
 
 import java.io.FileReader;
+import java.util.HashMap;
 import java.util.Properties;
 import java.util.Scanner;
 
@@ -11,14 +12,23 @@ import java.util.Scanner;
  */
 public class TomcatSevice {
 
+    private static HashMap<String,  Servlet> servletMap = new HashMap<>();
+
     public static void main(String[] args) throws Exception {
+
         // 接收用户请求，根据请求路径调用对应的 Servlet 来执行业务逻辑
-        // 1. 接收用户请求
-        String url = getUserInputUrl();
-        // 2. 根据请求路径调用对应的 Servlet
-        Servlet servlet = getServlet(url);
-        // 3. 执行业务逻辑
-        servlet.service();
+        while (true) {
+            // 1. 接收用户请求
+            String url = getUserInputUrl();
+            // 2. 根据请求路径调用对应的 Servlet
+            Servlet servlet = getServlet(url);
+            if (servlet == null) {
+                System.out.println("没有找到对应的服务!");
+                continue;
+            }
+            // 3. 执行业务逻辑
+            servlet.service();
+        }
     }
 
     private static String getUserInputUrl() {
@@ -29,6 +39,10 @@ public class TomcatSevice {
     }
 
     private static Servlet getServlet(String url) throws Exception {
+        if(servletMap.containsKey(url)){
+            System.out.println("从缓存中获取 Servlet 对象!");
+            return servletMap.get(url);
+        }
         // 解析配置文件
         // 1. 解析配置文件
         FileReader reader = new FileReader("src\\com\\gl\\java\\servlet\\web.properties");
@@ -37,10 +51,16 @@ public class TomcatSevice {
         properties.load(reader);
         reader.close();
         String className = properties.getProperty(url);
+        if (className == null) {
+            return null;
+        }
         // 3. 根据请求路径获取对应的 Servlet 类名
+        System.out.println("新建 Servlet 对象!");
         Class clazz = Class.forName(className);
         Object obj = clazz.newInstance();
-        return (Servlet) obj;
+        Servlet servlet = (Servlet) obj;
+        servletMap.put(url, servlet);
+        return servlet;
 
     }
 }

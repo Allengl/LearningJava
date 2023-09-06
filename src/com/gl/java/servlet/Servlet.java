@@ -8,5 +8,4 @@ public interface Servlet {
      * 执行业务逻辑
      */
     void service();
-
 }
